@@ -14,31 +14,35 @@
 
 ![general behavior of comment-dwim-2](http://remyferre.github.io/images/cd2-general.gif)
 
-# How to use
+# Setup
 
-You need to add your own key binding first, for instance:
+Install this package from [MELPA](http://melpa.org/#/).
 
-    (global-set-key (kbd "M-;") 'comment-dwim-2)
+Then, add your own key binding, for instance:
 
-If you use org-mode, consider using `org-comment-dwim-2` to comment within source blocks:
+```elisp
+(use-package comment-dwim-2
+  :bind
+  ("M-;" . comment-dwim-2))
+```
 
-	(define-key org-mode-map (kbd "M-;") 'org-comment-dwim-2)
+or
 
-# Installation
-
-This package can be installed from [MELPA](http://melpa.org/#/).
+```elisp
+(keymap-global-set "M-;" #'comment-dwim-2)
+```
 
 # Detailed use cases
 
-## Commenting/uncommenting the region
+## Comment/uncomment the region
 
 ![commenting/uncommenting the region with comment-dwim-2](http://remyferre.github.io/images/cd2-region.gif)
 
-## Commenting current line
+## Comment current line
 
 ![commenting current line with comment-dwim-2](http://remyferre.github.io/images/cd2-comment.gif)
 
-## Uncommenting current line
+## Uncomment current line
 
 ![uncommenting current line with comment-dwim-2](http://remyferre.github.io/images/cd2-uncomment.gif)
 
@@ -54,6 +58,12 @@ This package can be installed from [MELPA](http://melpa.org/#/).
 
 ![reindenting comment with comment-dwim-2](http://remyferre.github.io/images/cd2-reindent-comment.gif)
 
+## Org-mode support
+
+`comment-dwim-2` works as expected inside org-mode code blocks. In regular org-mode content, it fallbacks to `org-toggle-comment`:
+
+![using comment-dwim-2 in org-mode](http://remyferre.github.io/images/cd2-org-mode.gif)
+
 # Customization
 
 When commenting a region, `comment-dwim-2` will by default comment the entirety of the lines that the region spans (i.e. a line will be fully commented even if it is partly selected):
@@ -66,8 +76,8 @@ In Lisp modes, however, `comment-dwim-2` will strictly comment the region as com
 
 If you always want to fully comment lines (Lisp modes included), add this to your configuration file:
 
-	(setq cd2/region-command 'cd2/comment-or-uncomment-lines)
+	(setopt comment-dwim-2-region-function #'comment-dwim-2-comment-or-uncomment-lines)
 
 If you only want to comment the selected region (like `comment-dwim` does), add this:
 
-	(setq cd2/region-command 'cd2/comment-or-uncomment-region)
+	(setopt comment-dwim-2-region-function #'comment-dwim-2-comment-or-uncomment-region)
